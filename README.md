@@ -24,6 +24,24 @@ npm run dev
 
 Abra http://localhost:4317.
 
+Para gerar o site estático (o mesmo que o GitHub Pages publica):
+
+```bash
+npm run build
+npx --yes serve out -p 4317
+```
+
+## GitHub Pages
+
+O workflow [`.github/workflows/pages.yml`](.github/workflows/pages.yml) gera o export estático e publica em **GitHub Pages** a cada push em `main`.
+
+1. Crie o repositório no GitHub (pelo botão **Create repo** no Cursor, se o projeto ainda for só local).
+2. Deixe o repositório **público** — Pages em repositório privado exige GitHub Pro.
+3. Em **Settings → Pages**, escolha a origem **GitHub Actions** se o workflow ainda não tiver ligado sozinho.
+4. O site fica em `https://<usuario>.github.io/<repositorio>/`.
+
+O `basePath` é preenchido automaticamente nas Actions (`GITHUB_REPOSITORY`), então os CSS e JS apontam para `/<repositorio>/_next/...`. Localmente o caminho continua `/`.
+
 ## Atualizar os dados da wiki
 
 `data/wiki.json` é uma cópia dos dados do jogo (espécies com os valores de carta exatos, habilidades, terrenos e magias). Para atualizar depois de um patch de balanço:
