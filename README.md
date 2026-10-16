@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Animoras Deck Lab
 
-## Getting Started
+Guia de deck para o card game **Animoras**, montado a partir das regras e do balanço publicados em [animoras.com/wiki](https://animoras.com/wiki).
 
-First, run the development server:
+O deck principal é a **Revoada Celeste**: aggro aéreo de 40 cartas que junta aves com Voo e Ímpeto, uma cadeia de três slots de Céu aberto (o Ecossistema dobra o bônus para +4 de dano) e o combo de família Revoada, que dá Voo às aves terrestres. A página também traz o deck alternativo **Abismo** (Águas profundas + Mar aberto).
+
+Conteúdo da página:
+
+- as regras da wiki que o deck explora;
+- a lista completa, com o texto oficial de cada habilidade num tooltip;
+- a curva de mana;
+- um simulador de dano com 5 slots, terrenos, Ecossistema, Revoada, Frenesi e Fúria Selvagem;
+- plano de jogo, mulligan, ameaças e respostas;
+- substitutos para quem não tem as cartas lendárias ou épicas.
+
+## Rodar localmente
+
+Requer Node 20 ou superior.
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra http://localhost:4317.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Atualizar os dados da wiki
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`data/wiki.json` é uma cópia dos dados do jogo (espécies com os valores de carta exatos, habilidades, terrenos e magias). Para atualizar depois de um patch de balanço:
 
-## Learn More
+```bash
+npm run fetch:wiki            # regrava data/wiki.json e mostra o ranking por custo
+node scripts/fetch-wiki.mjs --top 15
+```
 
-To learn more about Next.js, take a look at the following resources:
+O script baixa o bundle JavaScript da wiki, executa-o sob jsdom e usa as próprias funções do jogo para calcular custo, dano, vida e habilidades de cada espécie. Se um nome de carta usado em `lib/deck.ts` sumir da wiki, a página mostra um erro indicando qual.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Estrutura
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `app/page.tsx`: o guia.
+- `lib/deck.ts`: as listas dos decks, os substitutos e os cálculos de curva.
+- `components/deck/`: carta, curva de mana, tooltip de habilidade e simulador de dano.
+- `scripts/fetch-wiki.mjs`: extração dos dados da wiki.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Projeto de fã, sem relação oficial com Animoras.

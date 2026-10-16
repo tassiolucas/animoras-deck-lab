@@ -6,7 +6,8 @@
     "dev": "next dev -p 4317 -H 0.0.0.0",
     "build": "next build",
     "start": "next start -p 4317",
-    "lint": "eslint"
+    "lint": "eslint",
+    "fetch:wiki": "node scripts/fetch-wiki.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
